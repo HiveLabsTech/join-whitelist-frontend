@@ -34,7 +34,7 @@ export default async function request<Request, Response extends {} | null>({
                 "API_KEY": API_KEY
             },
             // baseURL:thirdUrl ? thirdUrl :  "http://localhost:3000",
-            baseURL:thirdUrl ? thirdUrl :  "https://www.joinwhitelist.xyz/",
+            baseURL:thirdUrl ? thirdUrl :  "https://www.joinwhitelist.xyz",
             timeout: 30000,
             ...config,
         }).then((res) => res.data)
