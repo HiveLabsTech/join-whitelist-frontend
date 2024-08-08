@@ -21,7 +21,7 @@ export default async function Page({ params}: {params: { id: number | string }})
                       ]
                 }
                 image={`${NEXT_PUBLIC_URL}/park-1.png`}
-                post_url={`${NEXT_PUBLIC_URL}/app/api/frame`}
+                post_url={`${NEXT_PUBLIC_URL}/api/frame`}
             ></FrameMetadata>
         </>
     )   
