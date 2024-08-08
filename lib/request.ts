@@ -33,7 +33,8 @@ export default async function request<Request, Response extends {} | null>({
                 Authorization: localStorage.getItem("WHITELIST_TOKEN") ? localStorage.getItem("WHITELIST_TOKEN") : null,
                 "API_KEY": API_KEY
             },
-            baseURL:thirdUrl ? thirdUrl :  "http://localhost:3000",
+            // baseURL:thirdUrl ? thirdUrl :  "http://localhost:3000",
+            baseURL:thirdUrl ? thirdUrl :  "https://www.joinwhitelist.xyz/",
             timeout: 30000,
             ...config,
         }).then((res) => res.data)
