@@ -9,10 +9,10 @@ export async function POST(req: NextRequest): Promise<Response> {
     const { trustedData, untrustedData } = data
     const buttonId = untrustedData.buttonIndex
     let fid: number | undefined = undefined // 用户id
-    // if(trustedData?.messageBytes) {
-    //     const message = Message.decode(Buffer.from(trustedData.messageBytes, 'hex'));
-    //     fid = message.data?.fid;
-    // }
+    if(trustedData?.messageBytes) {
+        const message = Message.decode(Buffer.from(trustedData.messageBytes, 'hex'));
+        fid = message.data?.fid;
+    }
 
     let path: string = "";
     if(buttonId == 1) {
