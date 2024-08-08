@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+._1n3pr301 {
+  width: 108px!important;
+  height: 38px!important;
+  font-size: 14px!important;
+  padding: 13px 8px!important;
+}
+
+._1n3pr301 svg {
+  height: 14px!important;
+}
+
+.search-input {
+  background: url("/images/icons/search.png") no-repeat;
+  background-size: 20px 20px;
+  background-position: 8px center;
+  padding: 0 37px;
+}
+
+.inverted_triangle {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  background: url("/images/icons/triangle.png") no-repeat;
+  background-size: 16px 16px;
+}
+
+.check_mark {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  background: url("/images/icons/mark.png") no-repeat;
+  background-size: 16px 16px;
+}
+
+.share {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url("/images/icons/share.png") no-repeat;
+  background-size: 20px 20px;
+}
+
+.download {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url("/images/icons/download.png") no-repeat;
+  background-size: 20px 20px;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* 对于Chrome, Safari和Opera */
+}
+
+.hide-scrollbar {
+ -ms-overflow-style: none;
+  scrollbar-width: none; /* 对于Firefox */
+}
+
+.from-item-linkurl .ant-form-item-row {
+  display: block!important;
+}
+
+.from-item-linkurl label {
+  width: 100%;
+  margin-left: 11px!important;
+}
+
+.from-item-linkurl .ant-form-item-label {
+  overflow: visible!important;
+  margin-bottom: 10px;
+}
+
+.from-item-linkurl .ant-form-item-control-input-content {
+  margin-left: 20px!important;
+ 
+}
+
+.from-item-linkurl .ant-form-item-control-input {
+  width: 407px!important;
+}
+
+.from-item-linkurl #whitelist_linkurl_help {
+  margin-left: 18px;
+}
+
+.from-item-follow .ant-form-item-label,
+.from-item-channel .ant-form-item-label {
+  text-align: left!important;
+  padding-left: 39px;
+}
+
+.ant-skeleton-title {
+  width: 100%!important;
+}
+
+.ant-empty-description {
+  color: #dce0e6!important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
