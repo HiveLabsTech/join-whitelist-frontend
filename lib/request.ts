@@ -4,7 +4,13 @@ import { isEmpty } from 'lodash'
 import { notificationService } from "@/utils/notification";
 import { API_KEY } from "@/config";
 
-// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
+let BaseUrl: string | undefined = ""
+if(process.env.NODE_ENV === "development") {
+    BaseUrl = process.env.NEXT_PUBLIC_DEV_BASEURL ? process.env.NEXT_PUBLIC_DEV_BASEURL : ""
+}else {
+    BaseUrl = process.env.NEXT_PUBLIC_PRO_BASEURL ? process.env.NEXT_PUBLIC_PRO_BASEURL : ""
+}
+
 
 export default async function request<Request, Response extends {} | null>({
     config,
@@ -33,8 +39,7 @@ export default async function request<Request, Response extends {} | null>({
                 Authorization: localStorage.getItem("WHITELIST_TOKEN") ? localStorage.getItem("WHITELIST_TOKEN") : null,
                 "API_KEY": API_KEY
             },
-            // baseURL:thirdUrl ? thirdUrl :  "http://localhost:3000",
-            baseURL:thirdUrl ? thirdUrl :  "http://129.226.149.243:8999",
+            baseURL:thirdUrl ? thirdUrl : BaseUrl,
             timeout: 30000,
             ...config,
         }).then((res) => res.data)
