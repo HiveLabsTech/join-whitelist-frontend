@@ -60,9 +60,9 @@ export default function HomePage() {
     // 排序：0:降序 1:升序
     const [sort, setSort] = useState<number>(0)
     // 频道列表
-    const [channelist, setChannelist] = useState<SelectValueIft[]>([])
+    const [channelObj, setChannelObj] = useState<SelectValueIft | null>(null)
     // 用户列表
-    const [userlist, setUserlist] = useState<SelectValueIft[]>([])
+    const [userObj, setUserObj] = useState<SelectValueIft | null>(null)
 
     // Display the drawer 
     const showDrawer = () => {
@@ -108,12 +108,26 @@ export default function HomePage() {
 
     // validate successful!
     const onFinish = async (values: any) => {
-        console.log("validate successful!", values)
         const project_name = values ? values.projectName : ''
         const end_time = values && values.endTime ? +new Date(values.endTime.$d) : +new Date(0)
         const link = values ? values.linkurl : ''
+        let follow_fid: number = -1
+        let follow_user_name:string = ""
+        let follow_display_name: string = ""
+        let channel_id: string = ""
+        let channel_name: string = ""
 
+        if(userObj) {
+            follow_fid = Number(userObj.value.split("_")[0])
+            follow_user_name = userObj.value.split("_")[2]
+            follow_display_name = userObj.label
+        }
 
+        if(channelObj) {
+            channel_id = channelObj.value
+            channel_name = channelObj.label
+        }
+        
         // submit data
         const data: createJoinWhitelistDataType = {
             project_name: project_name,
@@ -123,13 +137,12 @@ export default function HomePage() {
             creator_fid: userInfo?.fid,
             creator_display_name: userInfo?.displayName,
             creator_user_name: userInfo?.username,
-            follow_fid: -1,
-            follow_user_name: "",
-            follow_display_name: "",
-            channel_id: "",
-            channel_name: "",
+            follow_fid,
+            follow_user_name,
+            follow_display_name,
+            channel_id,
+            channel_name,
             address: userInfo?.custody
-
         }
 
         // send request create join whitelist
@@ -331,11 +344,11 @@ export default function HomePage() {
                         className="mb-[24px] from-item-follow"
                     >
                         <DebounceSelect
-                            value={userlist}
+                            value={userObj}
                             placeholder="Search to select Follow"
                             fetchOptions={getUserListByName}
                             onChange={(newValue) => {
-                                setUserlist(newValue as SelectValueIft[])
+                                setUserObj(newValue as SelectValueIft)
                             }}
                             style={{ width: '100%' }}
                         />
@@ -347,11 +360,11 @@ export default function HomePage() {
                         className="mb-[24px] from-item-channel"
                     >
                         <DebounceSelect
-                            value={channelist}
+                            value={channelObj}
                             placeholder="Search to select Channel"
                             fetchOptions={getChannelListByName}
                             onChange={(newValue) => {
-                                setChannelist(newValue as SelectValueIft[])
+                                setChannelObj(newValue as SelectValueIft)
                             }}
                             style={{ width: '100%' }}
                         />
