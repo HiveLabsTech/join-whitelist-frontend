@@ -19,9 +19,10 @@ import DynamicSkeleton from '@/components/DynamicSkeleton/DynamicSkeleton'
 import ChannelService from "@/services/channelService";
 import { ChannelListType } from '@/lib/schemas/channel'
 import { UserListType } from "@/lib/schemas/user";
-import { DefaultOptionType } from "antd/es/select";
 import DebounceSelect from "../DebounceSelect/DebounceSelect";
 import UserService from "@/services/userService";
+import UploadImage from "../Upload/UploadImage";
+
 
 
 type FieldType = {
@@ -30,6 +31,7 @@ type FieldType = {
     endTime?: string;
     follow?: string;
     channel?: string;
+    image_file?: string;
 };
 
 interface SelectValueIft {
@@ -60,9 +62,11 @@ export default function HomePage() {
     // 排序：0:降序 1:升序
     const [sort, setSort] = useState<number>(0)
     // 频道列表
-    const [channelist, setChannelist] = useState<SelectValueIft[]>([])
+    const [channelObj, setChannelObj] = useState<SelectValueIft | null>(null)
     // 用户列表
-    const [userlist, setUserlist] = useState<SelectValueIft[]>([])
+    const [userObj, setUserObj] = useState<SelectValueIft | null>(null)
+    // 项目Logo地址
+    const [projectLogoUrl, setProjectLogoUrl] = useState<string>("")
 
     // Display the drawer 
     const showDrawer = () => {
@@ -108,28 +112,41 @@ export default function HomePage() {
 
     // validate successful!
     const onFinish = async (values: any) => {
-        console.log("validate successful!", values)
         const project_name = values ? values.projectName : ''
         const end_time = values && values.endTime ? +new Date(values.endTime.$d) : +new Date(0)
         const link = values ? values.linkurl : ''
+        let follow_fid: number = -1
+        let follow_user_name:string = ""
+        let follow_display_name: string = ""
+        let channel_id: string = ""
+        let channel_name: string = ""
 
+        if(userObj) {
+            follow_fid = Number(userObj.value.split("_")[0])
+            follow_user_name = userObj.value.split("_")[2]
+            follow_display_name = userObj.label
+        }
+
+        if(channelObj) {
+            channel_id = channelObj.value
+            channel_name = channelObj.label
+        }
 
         // submit data
         const data: createJoinWhitelistDataType = {
             project_name: project_name,
             end_time: end_time,
             link: link,
-            img_url: userInfo?.pfpUrl,
+            img_url: projectLogoUrl,
             creator_fid: userInfo?.fid,
             creator_display_name: userInfo?.displayName,
             creator_user_name: userInfo?.username,
-            follow_fid: -1,
-            follow_user_name: "",
-            follow_display_name: "",
-            channel_id: "",
-            channel_name: "",
+            follow_fid,
+            follow_user_name,
+            follow_display_name,
+            channel_id,
+            channel_name,
             address: userInfo?.custody
-
         }
 
         // send request create join whitelist
@@ -324,6 +341,25 @@ export default function HomePage() {
                         <Input placeholder="Please input link url after user join..." />
                     </Form.Item>
 
+                    <Form.Item<FieldType>
+                        name="image_file"
+                        label="Logo"
+                        rules={[ 
+                            { required: true,  validator: ()=>{
+                                if(projectLogoUrl) {
+                                    return Promise.resolve();
+                                }
+
+                                return Promise.reject(new Error('Please upload your logo'));
+                            } },
+                        ]}
+                        className="ml-[-72px]" 
+                    >
+                        <UploadImage onChange={(imgUrl: string) => {
+                            setProjectLogoUrl(imgUrl)
+                        }} />
+                    </Form.Item>
+
                     <div className="ml-[20px] mb-[24px] text-[14px] text-[#000000]">Join whitelist requirements:</div>
                     <Form.Item<FieldType>
                         label="Follow:"
@@ -331,11 +367,11 @@ export default function HomePage() {
                         className="mb-[24px] from-item-follow"
                     >
                         <DebounceSelect
-                            value={userlist}
+                            value={userObj}
                             placeholder="Search to select Follow"
                             fetchOptions={getUserListByName}
                             onChange={(newValue) => {
-                                setUserlist(newValue as SelectValueIft[])
+                                setUserObj(newValue as SelectValueIft)
                             }}
                             style={{ width: '100%' }}
                         />
@@ -347,16 +383,18 @@ export default function HomePage() {
                         className="mb-[24px] from-item-channel"
                     >
                         <DebounceSelect
-                            value={channelist}
+                            value={channelObj}
                             placeholder="Search to select Channel"
                             fetchOptions={getChannelListByName}
                             onChange={(newValue) => {
-                                setChannelist(newValue as SelectValueIft[])
+                                setChannelObj(newValue as SelectValueIft)
                             }}
                             style={{ width: '100%' }}
                         />
 
                     </Form.Item>
+
+                    
                 </Form>
                 <div className="w-[455px] h-[40px] flex justify-center absolute bottom-[17px] left-0">
                     <button className={classNames("w-[100px] h-[40px]border-0 bg-[#D9D9D9] text-[#fff] text-[16px] mr-[25px] rounded-[8px] active:bg-[#bbbbbb] transition duration-500 ease-out", isCreating ? "pointer-events-none" : "")} onClick={() => closeDrawer()}>Cancel</button>
