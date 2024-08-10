@@ -6,7 +6,6 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 const baseUrl = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_DEV_BASEURL : process.env.NEXT_PUBLIC_PRO_BASEURL
-const saveBaseUrl = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_DEV_IP : process.env.NEXT_PUBLIC_PRO_IP
 
 const getBase64 = (img: FileType, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -22,7 +21,7 @@ export default function UploadImage({value, onChange}: {
   const [loading, setLoading] = useState(false);
   // 图片地址
   const [imageUrl, setImageUrl] = useState<string>();
-  
+
   const uploadButton = (
     <button style={{ border: 0, background: 'none' }} type="button">
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -53,7 +52,7 @@ export default function UploadImage({value, onChange}: {
       console.log(info.file.response)
       if (info.file.response.code === 200) {
         // setFileList(...[info.file.response.data])
-        onChange && onChange(`${saveBaseUrl}/${info.file.response.data.url}`);
+        onChange && onChange(`${info.file.response.data.url}`);
         // setImageUrl(`${baseUrl}/${info.file.url}`);
         // Get this url from response in real world.
         getBase64(info.file.originFileObj as FileType, (url) => {
