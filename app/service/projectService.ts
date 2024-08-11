@@ -12,7 +12,7 @@ type ResponseType = {
 
 class ProjectService { 
     static async getProjectInfoImage(projectId: number | string, fid?: number): Promise<ResponseType> {
-        const result = await axios.get(`${baseUrl}/api/public/projectInfoImg/${projectId}${fid ? '/' + fid : ''}`)
+        const result = await axios.get(`http://129.226.149.243:8999/api/public/projectInfoImg/${projectId}${fid ? '/' + fid : ''}`)
         return result.data as ResponseType
     }
 }
