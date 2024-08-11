@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_DEV_IP : process.env.NEXT_PUBLIC_PRO_IP
+const baseUrl = process.env.NODE_ENV === "development" ? process.env.DEV_IP : process.env.PRO_IP
 
 type ResponseType = {
     code: number,
