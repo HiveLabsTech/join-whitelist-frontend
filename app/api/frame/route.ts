@@ -27,13 +27,13 @@ export async function POST(req: NextRequest): Promise<Response> {
             getFrameHtmlResponse({
                 buttons: [
                     {
-                        label: `follow_${imgUrl}`,
+                        label: `follow`,
                     },
                     {
                         label: `join_channel`,
                     } 
                 ],
-                image: `${NEXT_PUBLIC_URL}/park-1.png`,
+                image: `${imgUrl}`,
             })
         )
     }
