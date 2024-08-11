@@ -22,99 +22,118 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     let path: string = "";
     if (buttonId == 1) {
-        if (pageType == 1) { // 首页点击join按钮
-            const result = await ProjectService.getProjectInfoImage(projectId, fid)
-            let imgUrl: string = result.message
+        return new NextResponse(
+            getFrameHtmlResponse({
+                // 在这里可以添加buttons按钮组件
+                buttons: [
+                    {
+                        label: `follow_${fid}`,
+                        // action: 'post',
+                    },
+                    {
+                        label: `join_channel`,
+                        // action: 'post'
+                    }
+                ],
+                image: ``,
+                // 在这里可以添加post_url
+                // post_url: ``
+            })
+        )
 
-            // 这里需要处理 一个按钮 两个按钮的情况
-            if (result.data && result.data.isFollowCondition && result.data.isChannelCondition) { // 需要满足两个条件
-                return new NextResponse(
-                    getFrameHtmlResponse({
-                        // 在这里可以添加buttons按钮组件
-                        buttons: [
-                            {
-                                label: `follow`,
-                                // action: 'post',
-                            },
-                            {
-                                label: `join_channel`,
-                                // action: 'post'
-                            }
-                        ],
-                        image: `${imgUrl}`,
-                        // 在这里可以添加post_url
-                        // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
-                    })
-                )
-            } else if (result.data && result.data.isFollowCondition && !result.data.isChannelCondition) { // 需要满足follow操作
-                return new NextResponse(
-                    getFrameHtmlResponse({
-                        // 在这里可以添加buttons按钮组件
-                        buttons: [
-                            {
-                                label: `follow`,
-                                // action: 'post',
-                            }
-                        ],
-                        image: `${imgUrl}`,
-                        // 在这里可以添加post_url
-                        // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
-                    })
-                )
-            } else if (result.data && !result.data.isFollowCondition && result.data.isChannelCondition) { // 需要满足join channel操作
-                return new NextResponse(
-                    getFrameHtmlResponse({
-                        // 在这里可以添加buttons按钮组件
-                        buttons: [
-                            {
-                                label: `join_channel`,
-                                // action: 'post'
-                            }
-                        ],
-                        image: `${imgUrl}`,
-                        // 在这里可以添加post_url
-                        // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
-                    })
-                )
-            } else { // 直接加入成功
-                return new NextResponse(
-                    getFrameHtmlResponse({
-                        // 在这里可以添加buttons按钮组件
-                        buttons: [
-                            {
-                                label: `read more`,
-                                // action: 'post'
-                            }
-                        ],
-                        image: `${imgUrl}`,
-                        // 在这里可以添加post_url
-                        // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
-                    })
-                )
-            }
+        // if (pageType == 1) { // 首页点击join按钮
+        //     const result = await ProjectService.getProjectInfoImage(projectId, fid)
+        //     let imgUrl: string = result.message
 
-        } else if (pageType == 2) { // 关注 和 channel页面
-            // 发送一个关注的请求post
+        //     // 这里需要处理 一个按钮 两个按钮的情况
+        //     if (result.data && result.data.isFollowCondition && result.data.isChannelCondition) { // 需要满足两个条件
+        //         return new NextResponse(
+        //             getFrameHtmlResponse({
+        //                 // 在这里可以添加buttons按钮组件
+        //                 buttons: [
+        //                     {
+        //                         label: `follow`,
+        //                         // action: 'post',
+        //                     },
+        //                     {
+        //                         label: `join_channel`,
+        //                         // action: 'post'
+        //                     }
+        //                 ],
+        //                 image: `${imgUrl}`,
+        //                 // 在这里可以添加post_url
+        //                 post_url: ``
+        //             })
+        //         )
+        //     } else if (result.data && result.data.isFollowCondition && !result.data.isChannelCondition) { // 需要满足follow操作
+        //         return new NextResponse(
+        //             getFrameHtmlResponse({
+        //                 // 在这里可以添加buttons按钮组件
+        //                 buttons: [
+        //                     {
+        //                         label: `follow`,
+        //                         // action: 'post',
+        //                     }
+        //                 ],
+        //                 image: `${imgUrl}`,
+        //                 // 在这里可以添加post_url
+        //                 // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+        //             })
+        //         )
+        //     } else if (result.data && !result.data.isFollowCondition && result.data.isChannelCondition) { // 需要满足join channel操作
+        //         return new NextResponse(
+        //             getFrameHtmlResponse({
+        //                 // 在这里可以添加buttons按钮组件
+        //                 buttons: [
+        //                     {
+        //                         label: `join_channel`,
+        //                         // action: 'post'
+        //                     }
+        //                 ],
+        //                 image: `${imgUrl}`,
+        //                 // 在这里可以添加post_url
+        //                 // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+        //             })
+        //         )
+        //     } else { // 直接加入成功
+        //         return new NextResponse(
+        //             getFrameHtmlResponse({
+        //                 // 在这里可以添加buttons按钮组件
+        //                 buttons: [
+        //                     {
+        //                         label: `read more`,
+        //                         // action: 'post'
+        //                     }
+        //                 ],
+        //                 image: `${imgUrl}`,
+        //                 // 在这里可以添加post_url
+        //                 // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+        //             })
+        //         )
+        //     }
 
-            // 请求完毕后发送一个获取关注后的一个详情的图片请求
+        // } else if (pageType == 2) { // 关注 和 channel页面
+        //     // 发送一个关注的请求post
 
-            return new NextResponse(
-                getFrameHtmlResponse({
-                    // 在这里可以添加buttons按钮组件
-                    buttons: [
-                        {
-                            label: `follow`
-                        },
-                        {
-                            label: `join_channel`
-                        }
-                    ],
-                    image: `${NEXT_PUBLIC_URL}/`,
-                    // 在这里可以添加post_url
-                    // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
-                })
-            )
-        }
+        //     // 请求完毕后发送一个获取关注后的一个详情的图片请求
+
+        //     return new NextResponse(
+        //         getFrameHtmlResponse({
+        //             // 在这里可以添加buttons按钮组件
+        //             buttons: [
+        //                 {
+        //                     label: `follow`
+        //                 },
+        //                 {
+        //                     label: `join_channel`
+        //                 }
+        //             ],
+        //             image: `${NEXT_PUBLIC_URL}/`,
+        //             // 在这里可以添加post_url
+        //             // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+        //         })
+        //     )
+        // }
 
     } else if (buttonId == 2) {
         // 加入频道
