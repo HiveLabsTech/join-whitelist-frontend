@@ -34,16 +34,16 @@ export async function POST(req: NextRequest): Promise<Response> {
                         buttons: [
                             {
                                 label: `follow`,
-                                action: 'post',
+                                // action: 'post',
                             },
                             {
                                 label: `join_channel`,
-                                action: 'post'
+                                // action: 'post'
                             }
                         ],
                         image: `${imgUrl}`,
                         // 在这里可以添加post_url
-                        post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+                        // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
                     })
                 )
             } else if (result.data && result.data.isFollowCondition && !result.data.isChannelCondition) { // 需要满足follow操作
@@ -53,12 +53,12 @@ export async function POST(req: NextRequest): Promise<Response> {
                         buttons: [
                             {
                                 label: `follow`,
-                                action: 'post',
+                                // action: 'post',
                             }
                         ],
                         image: `${imgUrl}`,
                         // 在这里可以添加post_url
-                        post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+                        // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
                     })
                 )
             } else if (result.data && !result.data.isFollowCondition && result.data.isChannelCondition) { // 需要满足join channel操作
@@ -68,12 +68,12 @@ export async function POST(req: NextRequest): Promise<Response> {
                         buttons: [
                             {
                                 label: `join_channel`,
-                                action: 'post'
+                                // action: 'post'
                             }
                         ],
                         image: `${imgUrl}`,
                         // 在这里可以添加post_url
-                        post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+                        // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
                     })
                 )
             } else { // 直接加入成功
@@ -83,12 +83,12 @@ export async function POST(req: NextRequest): Promise<Response> {
                         buttons: [
                             {
                                 label: `read more`,
-                                action: 'post'
+                                // action: 'post'
                             }
                         ],
                         image: `${imgUrl}`,
                         // 在这里可以添加post_url
-                        post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+                        // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
                     })
                 )
             }
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     ],
                     image: `${NEXT_PUBLIC_URL}/`,
                     // 在这里可以添加post_url
-                    post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
+                    // post_url: `{NEXT_PUBLIC_URL}/user?pageType=2&projectId=${projectId}`
                 })
             )
         }
