@@ -118,6 +118,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     } else if (buttonId == 2) {
         // 加入频道
+        
     } else {
         path = ""
     }
