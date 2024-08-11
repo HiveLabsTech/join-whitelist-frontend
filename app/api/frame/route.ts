@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { NEXT_PUBLIC_URL } from '../../config'
 import { getFrameHtmlResponse } from '@coinbase/onchainkit';
 import { Message } from '@farcaster/core';
+import ProjectService from '@/app/service/projectService';
 
 export async function POST(req: NextRequest): Promise<Response> {
     // 查询参数对象
     const searchParams = req.nextUrl.searchParams
+    const projectId = searchParams.get("projectId") as (string | number)
     const data = await req.json()
     const { trustedData, untrustedData } = data
     const buttonId = untrustedData.buttonIndex
@@ -16,7 +18,11 @@ export async function POST(req: NextRequest): Promise<Response> {
         fid = message.data?.fid;
     }
 
+    const result = await ProjectService.getProjectInfoImage(projectId, fid)
+    const imgUrl = result.message
+
     if (buttonId == 1) {
+       
         return new NextResponse(
             getFrameHtmlResponse({
                 buttons: [
@@ -25,9 +31,9 @@ export async function POST(req: NextRequest): Promise<Response> {
                     },
                     {
                         label: `join_channel`,
-                    }
+                    } 
                 ],
-                image: `${NEXT_PUBLIC_URL}/park-1.png`,
+                image: `${imgUrl}`,
             })
         )
     }
