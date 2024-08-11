@@ -43,13 +43,11 @@ export default function UploadImage({value, onChange}: {
   };
 
   const handleChange: UploadProps['onChange'] = (info) => {
-    console.log(info)
     if (info.file.status === 'uploading') {
       setLoading(true);
       return;
     }
     if (info.file.status === 'done') {
-      console.log(info.file.response)
       if (info.file.response.code === 200) {
         // setFileList(...[info.file.response.data])
         onChange && onChange(`${info.file.response.data.url}`);
