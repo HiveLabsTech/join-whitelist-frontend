@@ -22,17 +22,17 @@ export async function POST(req: NextRequest): Promise<Response> {
         fid = message.data?.fid;
     }
 
-    if(pageType == 2) {
+    if (pageType == 2) {
         // 如果buttonId == 1
-        if(indexType == 'follow') {
+        if (indexType == 'follow') {
             // 关注操作
         }
 
-        if(indexType == 'channel') {
+        if (indexType == 'channel') {
             // 加入频道操作
         }
 
-        if(indexType == 'readmore') {
+        if (indexType == 'readmore') {
             // read more
         }
 
@@ -97,21 +97,23 @@ export async function POST(req: NextRequest): Promise<Response> {
                         post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
                     })
                 )
-            } 
-        } 
+            } else {
+                // 不需要任何条件即可加入
+                return new NextResponse(
+                    getFrameHtmlResponse({
+                        buttons: [
+                            {
+                                label: `read more`,
+                            }
+                        ],
+                        image: `${imgUrl}`,
+                        post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=readmore&projectId=${projectId}`
+                    })
+                )
+            }
+        }
 
-         // 不需要任何条件即可加入
-         return new NextResponse(
-            getFrameHtmlResponse({
-                buttons: [
-                    {
-                        label: `read more`,
-                    }
-                ],
-                image: `${imgUrl}`,
-                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=readmore&projectId=${projectId}`
-            })
-        )
+
     }
 
     const headers = new Headers()
