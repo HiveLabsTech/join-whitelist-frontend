@@ -27,7 +27,7 @@ export async function POST(req: NextRequest): Promise<Response> {
             getFrameHtmlResponse({
                 buttons: [
                     {
-                        label: `follow_${result}`,
+                        label: `follow_${String(result)}`,
                     },
                     {
                         label: `join_channel`,
