@@ -18,22 +18,22 @@ export async function POST(req: NextRequest): Promise<Response> {
         fid = message.data?.fid;
     }
 
-    const result = await ProjectService.getProjectInfoImage(projectId, fid)
-    const imgUrl = result.message
+    
 
     if (buttonId == 1) {
-       
+        const result = await ProjectService.getProjectInfoImage(projectId, fid)
+        const imgUrl = result.message
         return new NextResponse(
             getFrameHtmlResponse({
                 buttons: [
                     {
-                        label: `follow_${fid}`,
+                        label: `follow_${imgUrl}`,
                     },
                     {
                         label: `join_channel`,
                     } 
                 ],
-                image: `${imgUrl}`,
+                image: `${NEXT_PUBLIC_URL}/park-1.png`,
             })
         )
     }
