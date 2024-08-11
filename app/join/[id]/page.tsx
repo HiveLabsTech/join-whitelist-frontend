@@ -9,6 +9,7 @@ export default async function Page({ params}: {params: { id: number | string }})
     try {
         const result = await ProjectService.getProjectInfoImage(joinId)
         imgUrl = result.message
+        console.log(imgUrl)
     }catch(error) {
         console.log(error)
     }
