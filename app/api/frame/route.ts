@@ -77,11 +77,11 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow`, 
+                            label: `follow_${fid}`, 
                             action: 'post_redirect'
                         },
                         {
-                            label: `join_channel`,
+                            label: `join_channel_${fid}`,
                             action: 'post_redirect'
                         }
                     ],
