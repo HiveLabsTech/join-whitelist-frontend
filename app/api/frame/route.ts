@@ -15,7 +15,6 @@ export async function POST(req: NextRequest): Promise<Response> {
     const data = await req.json()
     const { trustedData, untrustedData } = data
     const buttonId = untrustedData.buttonIndex
-    const signerUuid = untrustedData.signerUuid
     let path: string = "";
     let fid: number | undefined = undefined // 用户id
     if (trustedData?.messageBytes) {
@@ -62,16 +61,16 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow_${fid}_${signerUuid}`, 
+                            label: `follow_${fid}`, 
                             action: 'post_redirect'
                         },
                         {
                             label: `join_channel_${fid}`,
-                            
+                            action: 'post_redirect'
                         }
                     ],
                     image: `${imgUrl}`,
-                    post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
+                    post_url: `https://warpcast.com/dwr.eth`
                 })
             )
         } else if(condtion1 && !isFollowed && isJoinedChannel || condition2 && !isFollowed) { // 需满足两个条件且未关注且已加入频道 或者 只需满足关注条件且为关注的状态
@@ -80,6 +79,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     buttons: [
                         {
                             label: `follow_${fid}`, 
+                            action: 'post_redirect'
                         }
                     ],
                     image: `${imgUrl}`,
@@ -93,6 +93,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     buttons: [
                         {
                             label: `follow_${fid}`, 
+                            action: 'post_redirect'
                         }
                     ],
                     image: `${imgUrl}`,
@@ -108,6 +109,7 @@ export async function POST(req: NextRequest): Promise<Response> {
             buttons: [
                 {
                     label: `read more`,
+                    action: 'post_redirect'
                 }
             ],
             image: `${imgUrl}`,
