@@ -29,7 +29,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     const result = await ProjectService.getProjectInfoImage(projectId, fid)
     const imgUrl = result.message
     const userName = result.data?.followUsername
-    const channelName = result.data?.channelName
+    
 
     let redirectUrl: string = ""
     if (pageType == 2) {
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                 redirectUrl = `https://warpcast.com/${userName}`
             } else if(indexType == 'channel') {
                 // 加入频道操作
-                redirectUrl = `https://warpcast.com/~/channel/${channelName}`
+                redirectUrl = `https://warpcast.com/~/channel/${result.data?.channel_id}`
             } else if(indexType == 'readmore') {
                 // 阅读更多操作
             }
@@ -77,11 +77,11 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow`, 
+                            label: `follow_${fid}`, 
                             action: 'post_redirect'
                         },
                         {
-                            label: `join_channel`,
+                            label: `join_channel_${fid}`,
                             action: 'post_redirect'
                         }
                     ],
