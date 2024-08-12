@@ -25,7 +25,7 @@ export async function POST(req: NextRequest): Promise<Response> {
         fid = message.data?.fid;
     }
 
-    let redirectUrl: string
+    let redirectUrl: string = ""
     if (pageType == 2) {
         if (buttonId == 1) {
             if (indexType == 'follow') {
@@ -45,8 +45,13 @@ export async function POST(req: NextRequest): Promise<Response> {
         if(buttonId == 2) {
             // 加入频道操作
         }
-        
-
+        const headers = new Headers()
+        headers.set('Loaction', redirectUrl)
+        const response = NextResponse.redirect(`${path}`, {
+            headers,
+            status: 302
+        })
+        return response
     }
 
     const result = await ProjectService.getProjectInfoImage(projectId, fid)
@@ -128,13 +133,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     
 
-    const headers = new Headers()
-    headers.set('Loaction', NEXT_PUBLIC_URL)
-    const response = NextResponse.redirect(`${path}`, {
-        headers,
-        status: 302
-    })
-    return response
+   
 }
 
 
