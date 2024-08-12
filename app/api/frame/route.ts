@@ -45,15 +45,14 @@ export async function POST(req: NextRequest): Promise<Response> {
         if(buttonId == 2) {
             // 加入频道操作
         }
-        
+
         const headers = new Headers()
         headers.set('Loaction', redirectUrl)
-        const response = NextResponse.redirect(`${path}`, {
+        const response = NextResponse.redirect(`${redirectUrl}`, {
             headers,
             status: 302
         })
         return response
-        
     }
 
     const result = await ProjectService.getProjectInfoImage(projectId, fid)
@@ -86,7 +85,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                         }
                     ],
                     image: `${imgUrl}`,
-                    post_url: `${redirectUrl}`
+                    post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&channelId=${result.data.channel_id}&projectId=${projectId}`
                 })
             )
         } else if(condtion1 && !isFollowed && isJoinedChannel || condition2 && !isFollowed) { // 需满足两个条件且未关注且已加入频道 或者 只需满足关注条件且为关注的状态
@@ -118,6 +117,8 @@ export async function POST(req: NextRequest): Promise<Response> {
             )
         } 
     } 
+
+   
 
     // 加入成功
     return new NextResponse(
