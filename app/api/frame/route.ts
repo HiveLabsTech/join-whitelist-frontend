@@ -25,19 +25,21 @@ export async function POST(req: NextRequest): Promise<Response> {
         fid = message.data?.fid;
     }
 
+
+    const result = await ProjectService.getProjectInfoImage(projectId, fid)
+    const imgUrl = result.message
+    const userName = result.data?.followUsername
+    const channelName = result.data?.channelName
+
     let redirectUrl: string = ""
     if (pageType == 2) {
         if (buttonId == 1) {
             if (indexType == 'follow') {
                 // 关注操作
-                // const result = await UserService.getUserListByIds(fid as number)
-                // const user = result.message[0]
-                // const username = user.username
-                // redirectUrl = `https://warpcast.com/${username}`
-                redirectUrl = `https://warpcast.com/zeck`
+                redirectUrl = `https://warpcast.com/${userName}`
             } else if(indexType == 'channel') {
                 // 加入频道操作
-                // redirectUrl = `https://warpcast.com/~/channel/${username}`
+                redirectUrl = `https://warpcast.com/~/channel/${channelName}`
             } else if(indexType == 'readmore') {
                 // 阅读更多操作
             }
@@ -56,8 +58,6 @@ export async function POST(req: NextRequest): Promise<Response> {
         return response
     }
 
-    const result = await ProjectService.getProjectInfoImage(projectId, fid)
-    const imgUrl = result.message
   
     if(result.data) {
         // 需要满足的条件：关注 + 加入频道
