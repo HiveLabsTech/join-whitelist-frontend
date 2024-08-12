@@ -20,11 +20,9 @@ export async function POST(req: NextRequest): Promise<Response> {
     const buttonId = untrustedData.buttonIndex
     let path: string = "";
     let fid: number | undefined = undefined // 用户id
-    let username: string | undefined = undefined
     if (trustedData?.messageBytes) {
         const message = Message.decode(Buffer.from(trustedData.messageBytes, 'hex'));
         fid = message.data?.fid;
-        username = message.data?.userDataBody?.value
     }
 
     let redirectUrl: string
@@ -32,9 +30,9 @@ export async function POST(req: NextRequest): Promise<Response> {
         if (buttonId == 1) {
             if (indexType == 'follow') {
                 // 关注操作
-                // const result = await UserService.getUserListByIds(fid as number)
-                // const user = result.message[0]
-                // const username = user.username
+                const result = await UserService.getUserListByIds(fid as number)
+                const user = result.message[0]
+                const username = user.username
                 redirectUrl = `https://warpcast.com/${username}`
             } else if(indexType == 'channel') {
                 // 加入频道操作
@@ -72,11 +70,11 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow_${username}`, 
+                            label: `follow`, 
                             action: 'post_redirect'
                         },
                         {
-                            label: `join_channel_${username}`,
+                            label: `join_channel`,
                             action: 'post_redirect'
                         }
                     ],
