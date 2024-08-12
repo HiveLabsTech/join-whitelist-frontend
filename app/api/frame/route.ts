@@ -41,80 +41,92 @@ export async function POST(req: NextRequest): Promise<Response> {
     const result = await ProjectService.getProjectInfoImage(projectId, fid)
     const imgUrl = result.message
 
-    if (buttonId == 1) {
+    return new NextResponse(
+        getFrameHtmlResponse({
+            buttons: [
+                {
+                    label: `join_channel_${fid}`,
+                }
+            ],
+            image: `${imgUrl}`,
+            post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
+        })
+    )
 
-        if (result.data) {
-            // 有两个满足条件
-            const condtion1 = Number(result.data.follow_id) > -1 && result.data.channel_id
-            // 只有一个条件follow
-            const condition2 = Number(result.data.follow_id) > -1 && !result.data.channel_id
-            // 只有一个条件joined channel
-            const condition3 = !(Number(result.data.follow_id) > -1) && result.data.channel_id
+    // if (buttonId == 1) {
 
-
-            // 未关注
-            const followNotFinished = !result.data.isFollowCondition
-            // 未joined channel
-            const channelNotFinished = !result.data.isChannelCondition
-
-            // 需要满足follow joined_channel && 都是 unfollow unChannel
-            if (condtion1 && followNotFinished && channelNotFinished) {
-                return new NextResponse(
-                    getFrameHtmlResponse({
-                        buttons: [
-                            {
-                                label: `follow`,
-                            },
-                            {
-                                label: `join_channel`,
-                            }
-                        ],
-                        image: `${imgUrl}`,
-                        post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&projectId=${projectId}`
-                    })
-                )
-            } else if (condtion1 && followNotFinished && !channelNotFinished || condition2 && followNotFinished) {
-                return new NextResponse(
-                    getFrameHtmlResponse({
-                        buttons: [
-                            {
-                                label: `follow`,
-                            },
-                        ],
-                        image: `${imgUrl}`,
-                        post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&projectId=${projectId}`
-                    })
-                )
-            } else if (condtion1 && !followNotFinished && channelNotFinished || condition3 && channelNotFinished) {
-                return new NextResponse(
-                    getFrameHtmlResponse({
-                        buttons: [
-                            {
-                                label: `join_channel`,
-                            }
-                        ],
-                        image: `${imgUrl}`,
-                        post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
-                    })
-                )
-            } else {
-                // 不需要任何条件即可加入
-                return new NextResponse(
-                    getFrameHtmlResponse({
-                        buttons: [
-                            {
-                                label: `read more`,
-                            }
-                        ],
-                        image: `${imgUrl}`,
-                        post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=readmore&projectId=${projectId}`
-                    })
-                )
-            }
-        }
+    //     if (result.data) {
+    //         // 有两个满足条件
+    //         const condtion1 = Number(result.data.follow_id) > -1 && result.data.channel_id
+    //         // 只有一个条件follow
+    //         const condition2 = Number(result.data.follow_id) > -1 && !result.data.channel_id
+    //         // 只有一个条件joined channel
+    //         const condition3 = !(Number(result.data.follow_id) > -1) && result.data.channel_id
 
 
-    }
+    //         // 未关注
+    //         const followNotFinished = !result.data.isFollowCondition
+    //         // 未joined channel
+    //         const channelNotFinished = !result.data.isChannelCondition
+
+    //         // 需要满足follow joined_channel && 都是 unfollow unChannel
+    //         if (condtion1 && followNotFinished && channelNotFinished) {
+    //             return new NextResponse(
+    //                 getFrameHtmlResponse({
+    //                     buttons: [
+    //                         {
+    //                             label: `follow`,
+    //                         },
+    //                         {
+    //                             label: `join_channel`,
+    //                         }
+    //                     ],
+    //                     image: `${imgUrl}`,
+    //                     post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&projectId=${projectId}`
+    //                 })
+    //             )
+    //         } else if (condtion1 && followNotFinished && !channelNotFinished || condition2 && followNotFinished) {
+    //             return new NextResponse(
+    //                 getFrameHtmlResponse({
+    //                     buttons: [
+    //                         {
+    //                             label: `follow`,
+    //                         },
+    //                     ],
+    //                     image: `${imgUrl}`,
+    //                     post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&projectId=${projectId}`
+    //                 })
+    //             )
+    //         } else if (condtion1 && !followNotFinished && channelNotFinished || condition3 && channelNotFinished) {
+    //             return new NextResponse(
+    //                 getFrameHtmlResponse({
+    //                     buttons: [
+    //                         {
+    //                             label: `join_channel_${fid}`,
+    //                         }
+    //                     ],
+    //                     image: `${imgUrl}`,
+    //                     post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
+    //                 })
+    //             )
+    //         } else {
+    //             // 不需要任何条件即可加入
+    //             return new NextResponse(
+    //                 getFrameHtmlResponse({
+    //                     buttons: [
+    //                         {
+    //                             label: `read more`,
+    //                         }
+    //                     ],
+    //                     image: `${imgUrl}`,
+    //                     post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=readmore&projectId=${projectId}`
+    //                 })
+    //             )
+    //         }
+    //     }
+
+
+    // }
 
     const headers = new Headers()
     headers.set('Loaction', NEXT_PUBLIC_URL)
