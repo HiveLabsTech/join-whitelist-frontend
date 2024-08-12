@@ -15,6 +15,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     const data = await req.json()
     const { trustedData, untrustedData } = data
     const buttonId = untrustedData.buttonIndex
+    const signerUuid = untrustedData.signerUuid
     let path: string = "";
     let fid: number | undefined = undefined // 用户id
     if (trustedData?.messageBytes) {
@@ -23,17 +24,20 @@ export async function POST(req: NextRequest): Promise<Response> {
     }
 
     if (pageType == 2) {
-        if (indexType == 'follow') {
-            // 关注操作
-        }
+        if (buttonId == 1) {
+            if (indexType == 'follow') {
+                // 关注操作
+            } else if(indexType == 'channel') {
+                // 加入频道操作
+            } else if(indexType == 'readmore') {
+                // 阅读更多操作
+            }
+        } 
 
-        if (indexType == 'channel') {
+        if(buttonId == 2) {
             // 加入频道操作
         }
-
-        if (indexType == 'readmore') {
-            // read more
-        }
+        
 
     }
 
@@ -58,10 +62,12 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow_${fid}`, 
+                            label: `follow_${fid}_${signerUuid}`, 
+                            action: 'post_redirect'
                         },
                         {
                             label: `join_channel_${fid}`,
+                            
                         }
                     ],
                     image: `${imgUrl}`,
