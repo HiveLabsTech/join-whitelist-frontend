@@ -3,7 +3,6 @@ import { NEXT_PUBLIC_URL } from '../../config'
 import { getFrameHtmlResponse } from '@coinbase/onchainkit';
 import { Message } from '@farcaster/core';
 import ProjectService from '@/app/service/projectService';
-import UserService from '@/services/userService';
 
 
 
@@ -28,7 +27,6 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     const result = await ProjectService.getProjectInfoImage(projectId, fid)
     const imgUrl = result.message
-    const userName = result.data?.followUsername
     
 
     let redirectUrl: string = ""
@@ -36,17 +34,20 @@ export async function POST(req: NextRequest): Promise<Response> {
         if (buttonId == 1) {
             if (indexType == 'follow') {
                 // 关注操作
+                const userName = result.data?.followUsername
                 redirectUrl = `https://warpcast.com/${userName}`
             } else if(indexType == 'channel') {
                 // 加入频道操作
                 redirectUrl = `https://warpcast.com/~/channel/${result.data?.channel_id}`
             } else if(indexType == 'readmore') {
                 // 阅读更多操作
+                redirectUrl = `${result.data?.linkUrl}`
             }
         } 
 
         if(buttonId == 2) {
             // 加入频道操作
+            redirectUrl = `https://warpcast.com/~/channel/${result.data?.channel_id}`
         }
 
         const headers = new Headers()

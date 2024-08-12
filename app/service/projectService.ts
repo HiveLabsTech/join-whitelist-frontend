@@ -11,6 +11,7 @@ type ResponseType = {
         channelName: string
         isChannelCondition: boolean,
         isFollowCondition: boolean
+        linkUrl: string
     }
 }
 
