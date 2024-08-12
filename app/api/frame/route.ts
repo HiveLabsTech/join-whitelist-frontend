@@ -3,6 +3,8 @@ import { NEXT_PUBLIC_URL } from '../../config'
 import { getFrameHtmlResponse } from '@coinbase/onchainkit';
 import { Message } from '@farcaster/core';
 import ProjectService from '@/app/service/projectService';
+import UserService from '@/services/userService';
+
 
 
 export async function POST(req: NextRequest): Promise<Response> {
@@ -11,23 +13,32 @@ export async function POST(req: NextRequest): Promise<Response> {
     const projectId = searchParams.get("projectId") as (string | number)
     const pageType = searchParams.get("pageType") as (string | number)
     const indexType: string = searchParams.get("indexType") as string
+    const channelId: string = searchParams.get("channelId") as string
 
     const data = await req.json()
     const { trustedData, untrustedData } = data
     const buttonId = untrustedData.buttonIndex
     let path: string = "";
     let fid: number | undefined = undefined // 用户id
+    let username: string | undefined = undefined
     if (trustedData?.messageBytes) {
         const message = Message.decode(Buffer.from(trustedData.messageBytes, 'hex'));
         fid = message.data?.fid;
+        username = message.data?.userDataBody?.value
     }
 
+    let redirectUrl: string
     if (pageType == 2) {
         if (buttonId == 1) {
             if (indexType == 'follow') {
                 // 关注操作
+                // const result = await UserService.getUserListByIds(fid as number)
+                // const user = result.message[0]
+                // const username = user.username
+                redirectUrl = `https://warpcast.com/${username}`
             } else if(indexType == 'channel') {
                 // 加入频道操作
+                // redirectUrl = `https://warpcast.com/~/channel/${username}`
             } else if(indexType == 'readmore') {
                 // 阅读更多操作
             }
@@ -61,16 +72,16 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow_${fid}`, 
+                            label: `follow_${username}`, 
                             action: 'post_redirect'
                         },
                         {
-                            label: `join_channel_${fid}`,
+                            label: `join_channel_${username}`,
                             action: 'post_redirect'
                         }
                     ],
                     image: `${imgUrl}`,
-                    post_url: `https://warpcast.com/dwr.eth`
+                    post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&channelId=${result.data.channel_id}&projectId=${projectId}`
                 })
             )
         } else if(condtion1 && !isFollowed && isJoinedChannel || condition2 && !isFollowed) { // 需满足两个条件且未关注且已加入频道 或者 只需满足关注条件且为关注的状态
@@ -92,12 +103,12 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow_${fid}`, 
+                            label: `join_channel_${fid}`, 
                             action: 'post_redirect'
                         }
                     ],
                     image: `${imgUrl}`,
-                    post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
+                    post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&channelId=${result.data.channel_id}&projectId=${projectId}`
                 })
             )
         } 
