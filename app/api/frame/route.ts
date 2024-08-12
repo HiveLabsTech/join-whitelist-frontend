@@ -90,7 +90,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     getFrameHtmlResponse({
                         buttons: [
                             {
-                                label: `join_channel`,
+                                label: `join_channel_${fid}`,
                             }
                         ],
                         image: `${imgUrl}`,
