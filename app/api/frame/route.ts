@@ -39,25 +39,15 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     const result = await ProjectService.getProjectInfoImage(projectId, fid)
     const imgUrl = result.message
-    let f_id:number = -1
-    let c_id:any = ""
-    let iF: boolean = false
-    let ij: boolean = false
-    let cd: any = false
+  
     if(result.data) {
         // 需要满足的条件：关注 + 加入频道
-        const condtion1 = (Number(result.data.follow_id) > -1) && (result.data.channel_id)
-
-        f_id = Number(result.data.follow_id)
-        c_id = result.data.channel_id
-        cd = condtion1
+        const condtion1 = (Number(result.data.follow_fid) > -1) && (result.data.channel_id)
 
         // 用户本身是否满足的条件
         const isFollowed = result.data.isFollowCondition // true：已关注 false 未关注
         const isJoinedChannel = result.data.isChannelCondition // false：是否已加入频道
-
-        iF = isFollowed
-        ij = isJoinedChannel
+      
 
         if(condtion1 && !isFollowed && !isJoinedChannel) {
             // 满足 关注 + 加入频道 && 未关注 && 未加入
@@ -83,7 +73,7 @@ export async function POST(req: NextRequest): Promise<Response> {
         getFrameHtmlResponse({
             buttons: [
                 {
-                    label: `fid:${f_id}_cid:${c_id}_if:${iF}_ij:${ij}_cd:${cd}`,
+                    label: `join_channel_${fid}`,
                 }
             ],
             image: `${imgUrl}`,

@@ -5,7 +5,7 @@ type ResponseType = {
     code: number,
     message: string,
     data?: {
-        follow_id: number | string,
+        follow_fid: number | string,
         channel_id: number | string
         isChannelCondition: boolean,
         isFollowCondition: boolean
