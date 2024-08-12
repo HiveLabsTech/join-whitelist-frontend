@@ -30,10 +30,11 @@ export async function POST(req: NextRequest): Promise<Response> {
         if (buttonId == 1) {
             if (indexType == 'follow') {
                 // 关注操作
-                const result = await UserService.getUserListByIds(fid as number)
-                const user = result.message[0]
-                const username = user.username
-                redirectUrl = `https://warpcast.com/${username}`
+                // const result = await UserService.getUserListByIds(fid as number)
+                // const user = result.message[0]
+                // const username = user.username
+                // redirectUrl = `https://warpcast.com/${username}`
+                redirectUrl = `https://warpcast.com/zeck`
             } else if(indexType == 'channel') {
                 // 加入频道操作
                 // redirectUrl = `https://warpcast.com/~/channel/${username}`
