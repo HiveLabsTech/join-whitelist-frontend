@@ -23,7 +23,6 @@ export async function POST(req: NextRequest): Promise<Response> {
     }
 
     if (pageType == 2) {
-        // 如果buttonId == 1
         if (indexType == 'follow') {
             // 关注操作
         }
@@ -40,6 +39,33 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     const result = await ProjectService.getProjectInfoImage(projectId, fid)
     const imgUrl = result.message
+    if(result.data) {
+        // 需要满足的条件：关注 + 加入频道
+        const condtion1 = Number(result.data.follow_id) > -1 && result.data.channel_id
+
+        // 用户本身是否满足的条件
+        const isFollowed = result.data.isFollowCondition // true：已关注 false 未关注
+        const isJoinedChannel = result.data.isChannelCondition // false：是否已加入频道
+
+        if(condtion1 && !isFollowed && !isJoinedChannel) {
+            // 满足 关注 + 加入频道 && 未关注 && 未加入
+            return new NextResponse(
+                getFrameHtmlResponse({
+                    buttons: [
+                        {
+                            label: `follow_${fid}`, 
+                        },
+                        {
+                            label: `join_channel_${fid}`,
+                        }
+                    ],
+                    image: `${imgUrl}`,
+                    post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
+                })
+            )
+
+        }
+    }
 
     return new NextResponse(
         getFrameHtmlResponse({
