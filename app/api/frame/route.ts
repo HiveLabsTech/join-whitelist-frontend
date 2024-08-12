@@ -67,17 +67,17 @@ export async function POST(req: NextRequest): Promise<Response> {
         }
     }
 
-    return new NextResponse(
-        getFrameHtmlResponse({
-            buttons: [
-                {
-                    label: `join_channel_${fid}`,
-                }
-            ],
-            image: `${imgUrl}`,
-            post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
-        })
-    )
+    // return new NextResponse(
+    //     getFrameHtmlResponse({
+    //         buttons: [
+    //             {
+    //                 label: `join_channel_${fid}`,
+    //             }
+    //         ],
+    //         image: `${imgUrl}`,
+    //         post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&projectId=${projectId}`
+    //     })
+    // )
 
     // if (buttonId == 1) {
 
