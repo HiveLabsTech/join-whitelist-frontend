@@ -59,6 +59,10 @@ export async function POST(req: NextRequest): Promise<Response> {
         return response
     }
 
+    if(pageType == 2 && buttonId == 1 && indexType == "confirm"){
+        
+    }   
+
   
     if(result.data) {
         // 需要满足的条件：关注 + 加入频道
@@ -129,9 +133,23 @@ export async function POST(req: NextRequest): Promise<Response> {
                     post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&channelId=${result.data.channel_id}&projectId=${projectId}`
                 })
             )
-        } 
+        } else if(condtion1 && isFollowed && isJoinedChannel || condition2 && isFollowed || condition3 && isJoinedChannel) {
+            return new NextResponse(
+                getFrameHtmlResponse({
+                    buttons: [
+                        {
+                            label: 'Confirm to join',
+                            action: 'post'
+                        }
+                    ],
+                    image: `${imgUrl}`,
+                    post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=confirm&projectId=${projectId}`
+                })
+            )
+        }
     } 
 
+    
    
 
     // 加入成功
