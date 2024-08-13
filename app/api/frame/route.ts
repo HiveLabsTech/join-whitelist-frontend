@@ -24,6 +24,11 @@ export async function POST(req: NextRequest): Promise<Response> {
     }
 
 
+    if(pageType == 2 && buttonId == 1 && indexType == "confirm"){
+        // 加入 项目 白名单
+       await ProjectService.joinProjectWhiteList(projectId, fid as number)
+    }   
+
     const result = await ProjectService.getProjectInfoImage(projectId, fid)
     const imgUrl = result.message
     
@@ -58,9 +63,6 @@ export async function POST(req: NextRequest): Promise<Response> {
         return response
     }
 
-    if(pageType == 2 && buttonId == 1 && indexType == "confirm"){
-        
-    }   
 
   
     if(result.data) {
