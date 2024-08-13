@@ -17,7 +17,6 @@ export async function POST(req: NextRequest): Promise<Response> {
     const data = await req.json()
     const { trustedData, untrustedData } = data
     const buttonId = untrustedData.buttonIndex
-    let path: string = "";
     let fid: number | undefined = undefined // 用户id
     if (trustedData?.messageBytes) {
         const message = Message.decode(Buffer.from(trustedData.messageBytes, 'hex'));
@@ -38,7 +37,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                 redirectUrl = `https://warpcast.com/${userName}`
             } else if(indexType == 'channel') {
                 // 加入频道操作
-                redirectUrl = `https://warpcast.com/~/channel/${result.data?.channel_id}`
+                redirectUrl = `https://warpcast.com/~/channel/${channelId}`
             } else if(indexType == 'readmore') {
                 // 阅读更多操作
                 redirectUrl = `${result.data?.linkUrl}`
@@ -47,7 +46,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 
         if(buttonId == 3) {
             // 加入频道操作
-            redirectUrl = `https://warpcast.com/~/channel/${result.data?.channel_id}`
+            redirectUrl = `https://warpcast.com/~/channel/${channelId}`
         }
 
         const headers = new Headers()
@@ -133,22 +132,24 @@ export async function POST(req: NextRequest): Promise<Response> {
                     post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&channelId=${result.data.channel_id}&projectId=${projectId}`
                 })
             )
-        } else if(condtion1 && isFollowed && isJoinedChannel || condition2 && isFollowed || condition3 && isJoinedChannel) {
-            return new NextResponse(
-                getFrameHtmlResponse({
-                    buttons: [
-                        {
-                            label: 'Confirm to join',
-                            action: 'post'
-                        }
-                    ],
-                    image: `${imgUrl}`,
-                    post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=confirm&projectId=${projectId}`
-                })
-            )
         }
     } 
 
+    // 还未加入
+    if(result.data && result.data.isJoined === 0) {
+        return new NextResponse(
+            getFrameHtmlResponse({
+                buttons: [
+                    {
+                        label: 'Confirm to join',
+                        action: 'post'
+                    }
+                ],
+                image: `${imgUrl}`,
+                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=confirm&projectId=${projectId}`
+            })
+        )
+    }
     
    
 
