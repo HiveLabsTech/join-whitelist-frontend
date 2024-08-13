@@ -261,10 +261,6 @@ export default function HomePage() {
 
     return (
         <Layout header={<PageContentHeader />}>
-            <button onClick={async () => {
-                const res = await ProjectService.joinProjectWhiteList(70, 825367)
-                console.log(res)
-            }}>点击测试</button>
             {/* Create join whitelist  */}
             <div className={classNames("flex justify-between my-[35px]")}>
                 <span className="text-[#0F111A] text-[24px] font-medium">Join Whitelist Trending</span>
@@ -274,7 +270,7 @@ export default function HomePage() {
             {/* Search whitelist */}
             <div className="flex justify-between mb-[50px]">
                 <input type="text" className={classNames("w-[950px] h-[40px] rounded-[10px] border-[1px] border-[#DFDFDF] outline-none search-input")} placeholder="Search..." value={searchName} onChange={(evt) => handleSearchChange(evt)} />
-
+                
                 <button className="w-[190px] h-[40px] box-border px-[15px] bg-[#F4F5F9] rounded-[10px] relative text-[#636779]" onClick={(evt) => {
                     evt.stopPropagation()
                     setIsShow(!isShow)
