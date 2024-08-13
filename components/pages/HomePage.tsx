@@ -264,7 +264,7 @@ export default function HomePage() {
             <button onClick={async () => {
                 const res = await ProjectService.joinProjectWhiteList(70, 825367)
                 console.log(res)
-            }}></button>
+            }}>点击测试</button>
             {/* Create join whitelist  */}
             <div className={classNames("flex justify-between my-[35px]")}>
                 <span className="text-[#0F111A] text-[24px] font-medium">Join Whitelist Trending</span>
