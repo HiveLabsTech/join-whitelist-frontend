@@ -30,8 +30,8 @@ export async function POST(req: NextRequest): Promise<Response> {
     
 
     let redirectUrl: string = ""
-    if (pageType == 2) {
-        if (buttonId == 1) {
+    if (pageType == 2 && (buttonId == 2 || buttonId == 3)) {
+        if (buttonId == 2) {
             if (indexType == 'follow') {
                 // 关注操作
                 const userName = result.data?.followUsername
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest): Promise<Response> {
             }
         } 
 
-        if(buttonId == 2) {
+        if(buttonId == 3) {
             // 加入频道操作
             redirectUrl = `https://warpcast.com/~/channel/${result.data?.channel_id}`
         }
@@ -78,13 +78,17 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow_${fid}`, 
+                            label: 'Refresh',
+                            action: 'post'
+                        },
+                        {
+                            label: `follow`, 
                             action: 'post_redirect'
                         },
                         {
-                            label: `join_channel_${fid}`,
+                            label: `join_channel`,
                             action: 'post_redirect'
-                        }
+                        },
                     ],
                     image: `${imgUrl}`,
                     post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&channelId=${result.data.channel_id}&projectId=${projectId}`
@@ -95,7 +99,11 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `follow_${fid}`, 
+                            label: 'Refresh',
+                            action: 'post'
+                        },
+                        {
+                            label: `follow`, 
                             action: 'post_redirect'
                         }
                     ],
@@ -109,7 +117,11 @@ export async function POST(req: NextRequest): Promise<Response> {
                 getFrameHtmlResponse({
                     buttons: [
                         {
-                            label: `join_channel_${fid}`, 
+                            label: 'Refresh',
+                            action: 'post'
+                        },
+                        {
+                            label: `join_channel`, 
                             action: 'post_redirect'
                         }
                     ],
