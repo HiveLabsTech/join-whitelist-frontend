@@ -7,8 +7,7 @@ type commonType = {
 }
 
 type ResponseType = {
-    
-    data?: {
+    data: {
         follow_fid: number | string,
         followUsername: string,
         channel_id: number | string,

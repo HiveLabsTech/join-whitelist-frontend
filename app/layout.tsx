@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "JoinWhitelist",
   description: "LFG",
   openGraph: {
-    title: 'RH',
+    title: 'JoinWhitelist',
     description: 'LFG',
     images: [`${NEXT_PUBLIC_URL}/park-1.png`], // 加个图片
   },
