@@ -266,6 +266,8 @@ export default function HomePage() {
                 <span className="text-[#0F111A] text-[24px] font-medium">Join Whitelist Trending</span>
                 <button className={classNames("w-[215px] h-[31px] rounded-[10px] font-medium text-[14px] text-[#fff]", token ? "bg-[#7C65C1] active:bg-purple-800 transition duration-500 ease-out" : "bg-[#C6C6C6] pointer-events-none")} onClick={() => showDrawer()}>Create Join Whitelist</button>
             </div>
+           
+            
 
             {/* Search whitelist */}
             <div className="flex justify-between mb-[50px]">
