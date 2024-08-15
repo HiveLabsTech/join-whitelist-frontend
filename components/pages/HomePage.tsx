@@ -163,7 +163,7 @@ export default function HomePage() {
                 // 关闭Drawer
                 closeDrawer()
                 // 更新列表数据
-                // getAllWhitelist()
+                getAllWhitelist()
 
             } else { // 创建失败
                 setIsCreating(false)
