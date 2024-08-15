@@ -61,13 +61,18 @@ export async function POST(req: NextRequest): Promise<Response> {
             redirectUrl = `${result.data.linkUrl}`
         }
 
-        const headers = new Headers()
-        headers.set('Loaction', redirectUrl)
-        const response = NextResponse.redirect(`${redirectUrl}`, {
-            headers,
-            status: 302
-        })
-        return response
+        // 非刷新按钮
+        if(!(buttonId == 1 && indexType != "readmore")) {
+            const headers = new Headers()
+            headers.set('Loaction', redirectUrl)
+            const response = NextResponse.redirect(`${redirectUrl}`, {
+                headers,
+                status: 302
+            })
+            return response
+        }
+
+       
     }
 
 
