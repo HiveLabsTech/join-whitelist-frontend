@@ -26,7 +26,7 @@ class ProjectService {
     }
 
     static async getProjectInfoImageByUser(projectId: number | string, fid: number): Promise<ResponseType> {
-        const result = await axios.get(`${baseUrl}/api/public/projectInfoImg/${projectId}/${fid}`)
+        const result = await axios.get(`${baseUrl}/api/public/getProjectInfoImageByUser/${projectId}/${fid}`)
         return result.data as ResponseType
     }
 
