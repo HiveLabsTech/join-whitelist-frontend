@@ -27,8 +27,8 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     // 不需要任何条件直接点击join按钮---直接加入
     // 满足条件了-点击confrim to join --- 加入
-    if(pageType == 2 && buttonId == 1 && indexType == "confirm" ||
-        pageType == 1 && followFid == "-1" && !channelId
+    if(pageType == 2 && buttonId == 1 && indexType == "confirm" || 
+        pageType == 1 && !channelId && Number(followFid) <= -1
     ){
         // 加入 项目 白名单
        await ProjectService.joinProjectWhiteList(projectId, fid as number)
@@ -75,6 +75,10 @@ export async function POST(req: NextRequest): Promise<Response> {
        
     }
 
+    // if(pageType == 1 && Number(result.data.follow_fid) <= -1 &&  !(result.data.channel_id)) {
+    //     await ProjectService.joinProjectWhiteList(projectId, fid as number)
+    // }
+
 
   
     // 需要满足的条件：关注 + 加入频道
@@ -106,7 +110,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                         action: 'post_redirect'
                     },
                 ],
-                image: `${imgUrl}`,
+                image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
                 post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&channelId=${result.data.channel_id}&projectId=${projectId}`
             })
         )
@@ -123,7 +127,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                         action: 'post_redirect'
                     }
                 ],
-                image: `${imgUrl}`,
+                image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
                 post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&projectId=${projectId}`
             })
         )
@@ -141,7 +145,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                         action: 'post_redirect'
                     }
                 ],
-                image: `${imgUrl}`,
+                image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
                 post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&channelId=${result.data.channel_id}&projectId=${projectId}`
             })
         )
@@ -157,7 +161,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                         action: 'post'
                     }
                 ],
-                image: `${imgUrl}`,
+                image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
                 post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=confirm&projectId=${projectId}`
             })
         )
@@ -174,7 +178,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     action: 'post_redirect'
                 }
             ],
-            image: `${imgUrl}`,
+            image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
             post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=readmore&projectId=${projectId}`
         })
     )
