@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { id: number | string }
                         },
                     ]
                 }
-                image={imgUrl}
+                image={`${NEXT_PUBLIC_URL}/${imgUrl}`}
                 post_url={`${NEXT_PUBLIC_URL}/api/frame?pageType=1&channelId=${channel_id}&followFid=${follow_fid}&projectId=${joinId}`}
             ></FrameMetadata>
             <div className='w-[100vw] h-[100vh] flex'>
