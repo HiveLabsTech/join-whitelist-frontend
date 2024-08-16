@@ -17,7 +17,7 @@ const nextConfig = {
 				destination: `${doMainImage}/uploadsImg/:path*`,
 			  },
 			  {
-				source: 'https://www.joinwhitelist.xyz/imgjoinwhitelist/:path*',
+				source: '/imgjoinwhitelist/:path*',
 				destination: `${doMainImage}/imgjoinwhitelist/:path*`,
 			  },
 		];
