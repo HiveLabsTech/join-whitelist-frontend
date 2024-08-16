@@ -41,10 +41,12 @@ class ProjectService {
         }>
     }
 
-    static async joinProjectWhiteList(projectId: number | string, fid: number): Promise<commonType<string>> {
+    static async joinProjectWhiteList(projectId: number | string, fid: number, channelId: string, followFid: string): Promise<commonType<string>> {
         const result = await axios.post(`${baseUrl}/api/public/joinWhiteList`,{
             "project_id": projectId,
-            fid
+            fid,
+            channelId,
+            followFid
         })
         return result.data as commonType<string>
     }

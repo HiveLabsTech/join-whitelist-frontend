@@ -31,7 +31,7 @@ export async function POST(req: NextRequest): Promise<Response> {
         pageType == 1 && !channelId && Number(followFid) <= -1
     ){
         // 加入 项目 白名单
-       await ProjectService.joinProjectWhiteList(projectId, fid as number)
+       await ProjectService.joinProjectWhiteList(projectId, fid as number, channelId, followFid)
     }   
 
     const result = await ProjectService.getProjectInfoImageByUser(projectId, fid as number)
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     },
                 ],
                 image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
-                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&channelId=${result.data.channel_id}&projectId=${projectId}`
+                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&channelId=${result.data.channel_id}&followFid=${result.data.follow_fid}&projectId=${projectId}`
             })
         )
     } else if(condtion1 && !isFollowed && isJoinedChannel || condition2 && !isFollowed) { // 需满足两个条件且未关注且已加入频道 或者 只需满足关注条件且为关注的状态
@@ -128,7 +128,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     }
                 ],
                 image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
-                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&projectId=${projectId}`
+                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=follow&channelId=${result.data.channel_id}&followFid=${result.data.follow_fid}&projectId=${projectId}`
             })
         )
     } else if(condtion1 && isFollowed && !isJoinedChannel || condition3 && !isJoinedChannel) {
@@ -146,7 +146,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     }
                 ],
                 image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
-                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&channelId=${result.data.channel_id}&projectId=${projectId}`
+                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=channel&channelId=${result.data.channel_id}&followFid=${result.data.follow_fid}&projectId=${projectId}`
             })
         )
     }
@@ -162,7 +162,7 @@ export async function POST(req: NextRequest): Promise<Response> {
                     }
                 ],
                 image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
-                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=confirm&projectId=${projectId}`
+                post_url: `${NEXT_PUBLIC_URL}/api/frame?pageType=2&indexType=confirm&channelId=${result.data.channel_id}&followFid=${result.data.follow_fid}&projectId=${projectId}`
             })
         )
     }
