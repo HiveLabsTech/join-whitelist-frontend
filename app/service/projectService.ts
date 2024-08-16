@@ -1,9 +1,9 @@
 import axios from 'axios'
 const baseUrl = process.env.NODE_ENV === "development" ? process.env.DEV_IP : process.env.PRO_IP
 
-type commonType = {
+type commonType<T> = {
     code: number,
-    message: string,
+    message: T,
 }
 
 type ResponseType = {
@@ -17,20 +17,36 @@ type ResponseType = {
         linkUrl: string,
         isJoined: number
     }
-} & commonType
+} & commonType<string>
 
 class ProjectService { 
-    static async getProjectInfoImage(projectId: number | string, fid?: number): Promise<ResponseType> {
-        const result = await axios.get(`${baseUrl}/api/public/projectInfoImg/${projectId}${fid ? '/' + fid : ''}`)
+    static async getProjectInfoImage(projectId: number | string): Promise<commonType<string>> {
+        const result = await axios.get(`${baseUrl}/api/public/projectInfoImg/${projectId}`)
+        return result.data as commonType<string>
+    }
+
+    static async getProjectInfoImageByUser(projectId: number | string, fid: number): Promise<ResponseType> {
+        const result = await axios.get(`${baseUrl}/api/public/projectInfoImg/${projectId}/${fid}`)
         return result.data as ResponseType
     }
 
-    static async joinProjectWhiteList(projectId: number | string, fid: number): Promise<commonType> {
+    static async getChannelIdandFollowIdByProjectId(projectId: number | string): Promise<commonType<{
+        channel_id: string,
+        follow_fid: number
+    }>> {
+        const result = await axios.get(`${baseUrl}/api/public/getChannelIdandFollowIdByProjectId/${projectId}`)
+        return result.data as commonType<{
+            channel_id: string,
+            follow_fid: number
+        }>
+    }
+
+    static async joinProjectWhiteList(projectId: number | string, fid: number): Promise<commonType<string>> {
         const result = await axios.post(`${baseUrl}/api/public/joinWhiteList`,{
             "project_id": projectId,
             fid
         })
-        return result.data as commonType
+        return result.data as commonType<string>
     }
 }
 
