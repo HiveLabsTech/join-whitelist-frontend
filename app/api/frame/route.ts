@@ -27,9 +27,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     // 不需要任何条件直接点击join按钮---直接加入
     // 满足条件了-点击confrim to join --- 加入
-    if(pageType == 2 && buttonId == 1 && indexType == "confirm" ||
-        pageType == 1 && followFid == "-1" && !channelId
-    ){
+    if(pageType == 2 && buttonId == 1 && indexType == "confirm"){
         // 加入 项目 白名单
        await ProjectService.joinProjectWhiteList(projectId, fid as number)
     }   
@@ -73,6 +71,10 @@ export async function POST(req: NextRequest): Promise<Response> {
         }
 
        
+    }
+
+    if(pageType == 1 && Number(result.data.follow_fid) <= -1 &&  !(result.data.channel_id)) {
+        await ProjectService.joinProjectWhiteList(projectId, fid as number)
     }
 
 
@@ -148,7 +150,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     }
 
     // 还未加入
-    if(result.data.isJoined === 0) {
+    if(result.data.isJoined === 0 && pageType != 1) {
         return new NextResponse(
             getFrameHtmlResponse({
                 buttons: [
