@@ -31,7 +31,7 @@ export async function POST(req: NextRequest): Promise<Response> {
         pageType == 1 && !channelId && Number(followFid) <= -1
     ){
         // 加入 项目 白名单
-    //    await ProjectService.joinProjectWhiteList(projectId, fid as number, channelId, followFid)
+       await ProjectService.joinProjectWhiteList(projectId, fid as number, channelId, followFid)
     }   
 
     const result = await ProjectService.getProjectInfoImageByUser(projectId, fid as number)
