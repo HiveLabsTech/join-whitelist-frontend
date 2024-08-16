@@ -34,7 +34,7 @@ export async function POST(req: NextRequest): Promise<Response> {
        await ProjectService.joinProjectWhiteList(projectId, fid as number)
     }   
 
-    const result = await ProjectService.getProjectInfoImage(projectId, fid)
+    const result = await ProjectService.getProjectInfoImageByUser(projectId, fid as number)
     const imgUrl = result.message
     
 

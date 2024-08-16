@@ -11,8 +11,9 @@ export default async function Page({ params }: { params: { id: number | string }
     try {
         const result = await ProjectService.getProjectInfoImage(joinId)
         imgUrl = result.message
-        channel_id = result.data.channel_id as string
-        follow_fid = result.data.follow_fid as number
+        const res = await ProjectService.getChannelIdandFollowIdByProjectId(joinId)
+        channel_id = res.message.channel_id
+        follow_fid = res.message.follow_fid
 
     } catch (error) {
         console.log(error)
