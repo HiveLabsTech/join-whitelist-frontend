@@ -17,8 +17,8 @@ const nextConfig = {
 				destination: `${doMainImage}/uploadsImg/:path*`,
 			  },
 			  {
-				source: '/static/PROJECTSIMG/:path*',
-				destination: `${doMainImage}/PROJECTSIMG/:path*`,
+				source: '/imgjoinwhitelist/:path*',
+				destination: `${doMainImage}/imgjoinwhitelist/:path*`,
 			  },
 		];
 	}

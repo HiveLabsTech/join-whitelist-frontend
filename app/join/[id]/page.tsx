@@ -14,7 +14,6 @@ export default async function Page({ params }: { params: { id: number | string }
         channel_id = result.data.channel_id as string
         follow_fid = result.data.follow_fid as number
 
-        console.log(imgUrl)
     } catch (error) {
         console.log(error)
     }
