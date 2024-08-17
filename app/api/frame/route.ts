@@ -14,6 +14,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     const indexType: string = searchParams.get("indexType") as string
     const channelId: string = searchParams.get("channelId") as string
     const followFid: string = searchParams.get("followFid") as string
+    const status: number = searchParams.get("status") ? Number(searchParams.get("status"))  : 0
 
     const data = await req.json()
     const { trustedData, untrustedData } = data
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     // 不需要任何条件直接点击join按钮---直接加入
     // 满足条件了-点击confrim to join --- 加入
     if(pageType == 2 && buttonId == 1 && indexType == "confirm" || 
-        pageType == 1 && !channelId && Number(followFid) <= -1
+        pageType == 1 && !channelId && Number(followFid) <= -1 && status != 1
     ){
         // 加入 项目 白名单
        await ProjectService.joinProjectWhiteList(projectId, fid as number, channelId, followFid)
@@ -36,6 +37,23 @@ export async function POST(req: NextRequest): Promise<Response> {
 
     const result = await ProjectService.getProjectInfoImageByUser(projectId, fid as number)
     const imgUrl = result.message
+    const isExpired = result.data.isExpired
+
+    // 已过期
+    if(isExpired) {
+        return new NextResponse(
+            getFrameHtmlResponse({
+                buttons: [
+                    {
+                        label: 'Return',
+                        action: 'post'
+                    },
+                ],
+                image: `${NEXT_PUBLIC_URL}/${imgUrl}`,
+                post_url: `${NEXT_PUBLIC_URL}/join/${projectId}`
+            })
+        )
+    }
     
 
     let redirectUrl: string = ""
