@@ -222,24 +222,10 @@ export default function HomePage() {
 
     // 根据用户名获取用户列表
     async function getUserListByName(q: string): Promise<SelectValueIft[]> {
-        // let allUsers: UserListType = [];
-        // let hasMore = true;
-        // let cursor = '';
-        // let newUserlist: SelectValueIft[] = []
         try {
             const res = await UserService.getUsersByName({ q })
             const users = HandleChannelOrFollowData(null, res.result.users)
             return users
-            // 后面需要优化 目前接口只支持返回10条数据 后面的话可以滚动到底部触发下一页数据
-           // while (hasMore) {
-            //     const res = await UserService.getUsersByName({ q, cursor })
-            //     allUsers = allUsers.concat(res.result.users)
-            //     cursor = res.result.next.cursor
-            //     if(!res.result.next || !res.result.next.cursor) {
-            //         hasMore=false
-            //     }
-            // }
-            
         } catch (error) {
             console.log(error)
             return []
@@ -485,12 +471,12 @@ function WhiteList({
 }: {
     whitelist: WhiteItemDataType[]
 }) {
-
+    const token = useAtomValue(tokenAtom)
     // WhitelistService
     return (
         <div>
             {/* 后续数据没加载完成的时候，可以添加animate-pulse类名 有一个加载效果 */}
-            {whitelist.map(item => <WhitelistCard {...item} className="mt-[30px] " key={item.id} />)}
+            {whitelist.map(item => <WhitelistCard {...item} isLogin={token ? true : false} className="mt-[30px] " key={item.id} />)}
         </div>
     )
 }

@@ -19,7 +19,8 @@ const whiteItemSchema = z.object({
     project_name: z.string(),
     status: z.number(),
     address: z.string(),
-    isOwn: z.number().optional()
+    isOwn: z.number().optional(),
+    isJoined: z.boolean().optional()
 })
 
 const whiteListSchema = z.array(whiteItemSchema)

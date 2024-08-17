@@ -15,7 +15,8 @@ type ResponseType = {
         isChannelCondition: boolean,
         isFollowCondition: boolean
         linkUrl: string,
-        isJoined: number
+        isJoined: number,
+        isExpired: boolean
     }
 } & commonType<string>
 
@@ -32,12 +33,14 @@ class ProjectService {
 
     static async getChannelIdandFollowIdByProjectId(projectId: number | string): Promise<commonType<{
         channel_id: string,
-        follow_fid: number
+        follow_fid: number,
+        status: number
     }>> {
         const result = await axios.get(`${baseUrl}/api/public/getChannelIdandFollowIdByProjectId/${projectId}`)
         return result.data as commonType<{
             channel_id: string,
-            follow_fid: number
+            follow_fid: number,
+            status: number
         }>
     }
 
