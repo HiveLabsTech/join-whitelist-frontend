@@ -15,13 +15,14 @@ const whiteItemSchema = z.object({
     hash: z.string().optional(),
     id: z.number(),
     img_url: z.string().optional(),
-    link:  z.string().optional(),
+    link: z.string().optional(),
     project_name: z.string(),
     status: z.number(),
     address: z.string(),
     isOwn: z.number().optional(),
     isJoined: z.boolean().optional()
 })
+
 
 const whiteListSchema = z.array(whiteItemSchema)
 
