@@ -48,7 +48,9 @@ export default function WhitelistCard({
        try {
            const res = await WhitelistService.downloadCsv(id)
            console.log("res", res, res.bob())
-       } catch(error) {}
+       } catch(error) {
+            console.log(error)
+       }
     }
 
 

@@ -45,6 +45,8 @@ class WhitelistService {
             identifier: 'WhitelistService.downloadCsv'
         })
 
+        console.log(result)
+
         return result
     }
 }
