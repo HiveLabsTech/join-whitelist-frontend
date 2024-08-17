@@ -2,8 +2,10 @@ import classNames from "classnames";
 import { Image } from "antd";
 import { type WhiteItemDataType } from "@/lib/schemas/whitelist";
 import { formatTimestamp } from "@/utils/dateUtil";
-import WhitelistService from "@/services/whitelistService";
 
+
+
+const baseUrl = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_DEV_BASEURL : process.env.NEXT_PUBLIC_PRO_BASEURL
 
 type WhitelistCardType = {
     className?: string
@@ -41,16 +43,6 @@ export default function WhitelistCard({
         } else {
             // 未登录
         }
-    }
-
-    // 下载csv
-    const handleDownloadCsv = async () => {
-       try {
-           const res = await WhitelistService.downloadCsv(id)
-           console.log("res", res, res.bob())
-       } catch(error) {
-            console.log(error)
-       }
     }
 
 
@@ -93,9 +85,9 @@ export default function WhitelistCard({
                 </button>}
 
                 {/* Download: 登录 && 自己创建 && 已结束 */}
-                {!isJoined && (isLogin && isOwn == 1 && status == 1) && <button className={borderClassname} onClick={() => handleDownloadCsv()}>
+                {!isJoined && (isLogin && isOwn == 1 && status == 1) && <a className={borderClassname} href={`${baseUrl}/api/whitelist/download_csv/${id}`} download="whitelist.csv">
                     <i className="download"></i> <span className="ml-[7px]">Download</span>
-                </button>}
+                </a>}
 
                 {isJoined && <span className="text-[#4bc95b] mr-[20px]">Joined</span> }
                 
