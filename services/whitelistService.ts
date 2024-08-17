@@ -34,6 +34,19 @@ class WhitelistService {
 
         return result
     }
+
+    static async downloadCsv(project_id: number): Promise<any> {
+        const result = await request({
+            config: {
+                method: 'get',
+                url: `/api/whitelist/download_csv/${project_id}`,
+            },
+            responseSchema: commonResponseDataSchema,
+            identifier: 'WhitelistService.downloadCsv'
+        })
+
+        return result
+    }
 }
 
 export default WhitelistService
