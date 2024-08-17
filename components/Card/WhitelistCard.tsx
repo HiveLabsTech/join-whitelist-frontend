@@ -46,7 +46,8 @@ export default function WhitelistCard({
     // 下载csv
     const handleDownloadCsv = async () => {
        try {
-            await WhitelistService.downloadCsv(id)
+           const res = await WhitelistService.downloadCsv(id)
+           console.log("res", res, res.bob())
        } catch(error) {}
     }
 
