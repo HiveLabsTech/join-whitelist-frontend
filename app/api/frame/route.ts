@@ -20,11 +20,9 @@ export async function POST(req: NextRequest): Promise<Response> {
     const { trustedData, untrustedData } = data
     const buttonId = untrustedData.buttonIndex
     let fid: number | undefined = undefined // 用户id
-    let username: any = undefined
     if (trustedData?.messageBytes) {
         const message = Message.decode(Buffer.from(trustedData.messageBytes, 'hex'));
         fid = message.data?.fid;
-        username = message.data?.userDataBody?.value
     }
 
 
@@ -34,7 +32,7 @@ export async function POST(req: NextRequest): Promise<Response> {
         pageType == 1 && !channelId && Number(followFid) <= -1 && status != 1
     ){
         // 加入 项目 白名单
-       await ProjectService.joinProjectWhiteList(projectId, fid as number, channelId, followFid)
+       await ProjectService.joinProjectWhiteList(projectId, fid as number)
     }   
 
     const result = await ProjectService.getProjectInfoImageByUser(projectId, fid as number)
@@ -122,11 +120,11 @@ export async function POST(req: NextRequest): Promise<Response> {
                         action: 'post'
                     },
                     {
-                        label: `follow_${username}`, 
+                        label: `follow`, 
                         action: 'post_redirect'
                     },
                     {
-                        label: `join_channel_${username}`,
+                        label: `join_channel`,
                         action: 'post_redirect'
                     },
                 ],
