@@ -24,7 +24,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     if (trustedData?.messageBytes) {
         const message = Message.decode(Buffer.from(trustedData.messageBytes, 'hex'));
         fid = message.data?.fid;
-        username = message.data?.usernameProofBody?.name
+        username = message.data?.userDataBody?.value
     }
 
 
