@@ -37,12 +37,30 @@ export default function WhitelistCard({
 }: WhitelistCardType) {
     const borderClassname = "px-[15px] py-[11px] border-0 rounded-[8px] bg-[#7c65c1] text-[#fff] text-[18px] font-medium flex items-center active:bg-purple-800 transition duration-500 ease-out"
 
+    // 点击join按钮
     const handleJoin = () => {
         if (isLogin) { // 已登录
             window.open(`https://warpcast.com/${creator_user_name}/${hash}`)
         } else {
             // 未登录
         }
+    }
+
+    // 点击share按钮进行分享
+    const handleShare = () => {
+        // 需要分享的内容
+        const text = `New join whiltelist happend , created by @${creator_display_name}`
+        const url = `https://www.joinwhitelist.xyz/join/${id}`
+
+        // 编码分享内容
+        const encodedText = encodeURIComponent(text)
+        const encodeUrl = encodeURIComponent(url)
+
+        // 构建Warpcast 分享 URL
+        const warpcastShareUrl = `https://warpcast.com/~/compose?text=${encodedText}&embeds[]=${encodeUrl}`
+
+        // 在新窗口中打开Warpcast分享页面
+        window.open(warpcastShareUrl, '_blank')
     }
 
 
@@ -79,7 +97,7 @@ export default function WhitelistCard({
                 </button>}
 
                 {/* Share: 登录 && 自己创建 && 进行中 */}
-                {!isJoined && (isLogin && isOwn == 1 && status != 1) && <button className={borderClassname}>
+                {!isJoined && (isLogin && isOwn == 1 && status != 1) && <button className={borderClassname} onClick={()=>handleShare()}> 
                     <i className="share"></i>
                     <span className="ml-[7px]">Share</span>
                 </button>}
