@@ -64,7 +64,7 @@ export default async function request<Request, Response extends {} | null>({
         if (axios.isAxiosError(err)) {
             if(err.code === "ECONNABORTED") {
                 notificationService.error("bottomLeft", "Request timed out")
-            } else {
+            }else {
                 notificationService.error("bottomLeft", err.message)
             }
             
