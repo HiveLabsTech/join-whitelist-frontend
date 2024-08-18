@@ -11,6 +11,12 @@ if(process.env.NODE_ENV === "development") {
     BaseUrl = process.env.NEXT_PUBLIC_PRO_BASEURL ? process.env.NEXT_PUBLIC_PRO_BASEURL : ""
 }
 
+type HeaderType = {
+    "Content-type": string,
+    withCredentials: boolean,
+    Authorization?: string | null,
+    API_KEY: string
+}
 
 export default async function request<Request, Response extends {} | null>({
     config,
@@ -32,13 +38,19 @@ export default async function request<Request, Response extends {} | null>({
     }
 
     try {
+        const headers: HeaderType =  {
+            "Content-type": "application/json",
+            withCredentials: true, // 允许跨域请求
+            "API_KEY": API_KEY
+        } 
+
+          // 如果 thirdUrl 不存在，则添加 Authorization 头
+        if (!thirdUrl) {
+            headers.Authorization = localStorage.getItem("WHITELIST_TOKEN") || null
+        } 
+        
         const data = await axios.request({
-            headers: {
-                "Content-type": "application/json",
-                withCredentials: true, // 允许跨域请求
-                Authorization: localStorage.getItem("WHITELIST_TOKEN") ? localStorage.getItem("WHITELIST_TOKEN") : null,
-                "API_KEY": API_KEY
-            },
+            headers: headers,
             baseURL:thirdUrl ? thirdUrl : BaseUrl,
             timeout: 30000,
             ...config,
