@@ -2,6 +2,10 @@ import classNames from "classnames";
 import { Image } from "antd";
 import { type WhiteItemDataType } from "@/lib/schemas/whitelist";
 import { formatTimestamp } from "@/utils/dateUtil";
+import LoginButton from "../SigninButton/LoginButton";
+
+
+
 
 
 
@@ -11,6 +15,8 @@ type WhitelistCardType = {
     className?: string
     isLogin: boolean
 } & WhiteItemDataType
+
+
 
 export default function WhitelistCard({
     className = '',
@@ -37,13 +43,14 @@ export default function WhitelistCard({
 }: WhitelistCardType) {
     const borderClassname = "px-[15px] py-[11px] border-0 rounded-[8px] bg-[#7c65c1] text-[#fff] text-[18px] font-medium flex items-center active:bg-purple-800 transition duration-500 ease-out"
 
+
+
+
+
     // 点击join按钮
     const handleJoin = () => {
-        if (isLogin) { // 已登录
-            window.open(`https://warpcast.com/${creator_user_name}/${hash}`)
-        } else {
-            // 未登录
-        }
+        // 跳转到指定的join Cast 去
+        window.open(`https://warpcast.com/${creator_user_name}/${hash}`)
     }
 
     // 点击share按钮进行分享
@@ -62,7 +69,6 @@ export default function WhitelistCard({
         // 在新窗口中打开Warpcast分享页面
         window.open(warpcastShareUrl, '_blank')
     }
-
 
     return (
         <div className={classNames('relative px-[20px] py-[19px] border-[1px] rounded-lg shadow flex items-center', className)}>
@@ -92,12 +98,20 @@ export default function WhitelistCard({
             */}
             <div className="w-[145px] flex justify-end">
                 {/* join: (非自己创建 && 正在进行中) || 未登录  */}
-                {!isLogin || (isLogin && isOwn != 1 && status != 1 && !isJoined) && <button className={borderClassname} onClick={() => handleJoin()}>
+                {((isLogin && isOwn != 1 && status != 1 && !isJoined)) && <button className={borderClassname} onClick={() => handleJoin()}>
                     <i className="not-italic">+</i> <span className="ml-[7px]">Join</span>
                 </button>}
 
+                {!isLogin && <div className="signbutton_container relative">
+                    <LoginButton />
+                </div>}
+
+
+
+
+
                 {/* Share: 登录 && 自己创建 && 进行中 */}
-                {!isJoined && (isLogin && isOwn == 1 && status != 1) && <button className={borderClassname} onClick={()=>handleShare()}> 
+                {!isJoined && (isLogin && isOwn == 1 && status != 1) && <button className={borderClassname} onClick={() => handleShare()}>
                     <i className="share"></i>
                     <span className="ml-[7px]">Share</span>
                 </button>}
@@ -107,9 +121,9 @@ export default function WhitelistCard({
                     <i className="download"></i> <span className="ml-[7px]">Download</span>
                 </a>}
 
-                {isJoined && <span className="text-[#4bc95b] mr-[20px]">Joined</span> }
-                
-                
+                {isJoined && <span className="text-[#4bc95b] mr-[20px]">Joined</span>}
+
+
             </div>
         </div>
     )
