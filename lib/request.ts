@@ -36,7 +36,7 @@ export default async function request<Request, Response extends {} | null>({
             headers: {
                 "Content-type": "application/json",
                 withCredentials: true, // 允许跨域请求
-                Authorization: localStorage.getItem("WHITELIST_TOKEN") ? localStorage.getItem("WHITELIST_TOKEN") : "",
+                Authorization: localStorage.getItem("WHITELIST_TOKEN") ? localStorage.getItem("WHITELIST_TOKEN") : null,
                 "API_KEY": API_KEY
             },
             baseURL:thirdUrl ? thirdUrl : BaseUrl,

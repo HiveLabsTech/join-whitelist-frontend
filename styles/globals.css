@@ -23,6 +23,28 @@ body {
   height: 14px!important;
 }
 
+.signbutton_container ._1n3pr301 {
+  width: 85px!important;
+  height: 49px!important;
+  border-radius: 10px!important;
+  padding-left: 0!important;
+}
+
+.signbutton_container ._1n3pr301::before {
+  content: "+ Join";
+  position: absolute;
+  width: 85px!important;
+  height: 49px!important;
+  border-radius: 10px!important;
+  background-color: #7c65c1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+
 .search-input {
   background: url("/images/icons/search.png") no-repeat;
   background-size: 20px 20px;

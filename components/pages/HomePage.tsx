@@ -27,6 +27,7 @@ import UploadImage from "../Upload/UploadImage";
 
 
 
+
 type FieldType = {
     projectName?: string;
     linkurl?: string;
@@ -199,7 +200,7 @@ export default function HomePage() {
         try {
             setWhitelist([])
             const result = await WhitelistService.getAllWhitelist()
-            if (result.code === 200) {
+            if (result.code === 200 || result.code === 401) {
                 setWhitelist(result.message)
             } else {
                 notificationService.error("bottomLeft", String(result.message))

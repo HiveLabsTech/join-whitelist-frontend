@@ -1,4 +1,4 @@
-import SigninButton from "../SigninButton/SigninButton"
+import SigninButton from "../SigninButton/ButtonIndex"
 import classNames from "classnames"
 
 export default function PageContentHeader() {
