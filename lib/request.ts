@@ -46,7 +46,7 @@ export default async function request<Request, Response extends {} | null>({
 
           // 如果 thirdUrl 不存在，则添加 Authorization 头
         if (!thirdUrl) {
-            headers.Authorization = localStorage.getItem("WHITELIST_TOKEN") || null
+            headers.Authorization = localStorage.getItem("WHITELIST_TOKEN") ?  localStorage.getItem("WHITELIST_TOKEN") : null
         } 
         
         const data = await axios.request({
