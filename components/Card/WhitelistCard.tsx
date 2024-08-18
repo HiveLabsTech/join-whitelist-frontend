@@ -56,7 +56,7 @@ export default function WhitelistCard({
     // 点击share按钮进行分享
     const handleShare = () => {
         // 需要分享的内容
-        const text = `New join whiltelist happend , created by @${creator_display_name}`
+        const text = `I've just created a whitelist on @joinwhitelist, Join  with me now`
         const url = `https://www.joinwhitelist.xyz/join/${id}`
 
         // 编码分享内容
