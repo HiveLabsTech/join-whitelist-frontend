@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { id: number | string }
                 buttons={
                     [
                         {
-                            label: `Join`,
+                            label: `${(!channel_id && follow_fid == -1) ? 'Confirm' : 'Join' }`,
                             action: 'post'
                         },
                     ]

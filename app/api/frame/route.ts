@@ -175,7 +175,7 @@ export async function POST(req: NextRequest): Promise<Response> {
             getFrameHtmlResponse({
                 buttons: [
                     {
-                        label: 'Confirm to join',
+                        label: 'Confirm',
                         action: 'post'
                     }
                 ],
