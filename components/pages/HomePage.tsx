@@ -83,6 +83,9 @@ export default function HomePage() {
         }
         // 清空表单中所有的值
         joinForm.resetFields()
+        setChannelObj(null)
+        setUserObj(null)
+        setProjectLogoUrl("")
         setOpen(false)
     }
 
@@ -197,6 +200,7 @@ export default function HomePage() {
     // get whitelist
     async function getAllWhitelist() {
         setIsLoading(true)
+        
         try {
             setWhitelist([])
             const result = await WhitelistService.getAllWhitelist()
@@ -237,8 +241,13 @@ export default function HomePage() {
     useEffect(() => {
         document.addEventListener('click', handleHiddenFilterBox);
 
+        // const timer = setInterval(() => {
+        //     getAllWhitelist(false)
+        // }, 600 * 1000)
+
         return () => {
             document.removeEventListener('click', handleHiddenFilterBox);
+            // clearInterval(timer)
         }
     }, [])
 
