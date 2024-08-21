@@ -70,6 +70,9 @@ export default function UploadImage({value, onChange}: {
         name="image_file"
         className="avatar-uploader"
         action={`${baseUrl}/api/uploadImg`}
+        headers={{
+          Authorizaton: (localStorage.getItem("WHITELIST_TOKEN") ?  localStorage.getItem("WHITELIST_TOKEN") : '') as string
+        }}
         beforeUpload={beforeUpload}
         onChange={handleChange}
         listType="picture-card"
