@@ -8,7 +8,7 @@ export const SIGNIN_BUTTON_CONFIG = {
     relay: 'https://relay.farcaster.xyz',
 }
 
-export const API_KEY = APIKEY
+export const API_KEY = APIKEY ? APIKEY : ''
 
 
 
