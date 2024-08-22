@@ -106,10 +106,6 @@ export default function WhitelistCard({
                     <LoginButton />
                 </div>}
 
-
-
-
-
                 {/* Share: 登录 && 自己创建 && 进行中 */}
                 {!isJoined && (isLogin && isOwn == 1 && status != 1) && <button className={borderClassname} onClick={() => handleShare()}>
                     <i className="share"></i>
@@ -117,11 +113,11 @@ export default function WhitelistCard({
                 </button>}
 
                 {/* Download: 登录 && 自己创建 && 已结束 */}
-                {!isJoined && (isLogin && isOwn == 1 && status == 1) && <a className={borderClassname} href={`${baseUrl}/api/whitelist/download_csv/${id}`} download="whitelist.csv">
+                {(isLogin && isOwn == 1 && status == 1) && <a className={borderClassname} href={`${baseUrl}/api/whitelist/download_csv/${id}`} download="whitelist.csv">
                     <i className="download"></i> <span className="ml-[7px]">Download</span>
                 </a>}
 
-                {isJoined && <span className="text-[#4bc95b] mr-[20px]">Joined</span>}
+                {(isLogin && isJoined && isOwn != 1) && <span className="text-[#4bc95b] mr-[20px]">Joined</span>}
 
 
             </div>
