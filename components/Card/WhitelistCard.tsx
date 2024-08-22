@@ -107,7 +107,7 @@ export default function WhitelistCard({
                 </div>}
 
                 {/* Share: 登录 && 自己创建 && 进行中 */}
-                {!isJoined && (isLogin && isOwn == 1 && status != 1) && <button className={borderClassname} onClick={() => handleShare()}>
+                {(isLogin && isOwn == 1 && status != 1) && <button className={borderClassname} onClick={() => handleShare()}>
                     <i className="share"></i>
                     <span className="ml-[7px]">Share</span>
                 </button>}
