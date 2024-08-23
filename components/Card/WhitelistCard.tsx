@@ -49,8 +49,9 @@ export default function WhitelistCard({
 
     // 点击join按钮
     const handleJoin = () => {
+        const targetHash = hash ? hash.slice(0, 11) : hash
         // 跳转到指定的join Cast 去
-        window.open(`https://warpcast.com/${creator_user_name}/${hash}`)
+        window.open(`https://warpcast.com/joinwhitelist/${targetHash}`)
     }
 
     // 点击share按钮进行分享
