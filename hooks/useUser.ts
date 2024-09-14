@@ -10,6 +10,6 @@ export type userInfoType = {
     custody: string | undefined
 }
 
-export const tokenAtom = atomWithStorage<string>("WHITELIST_TOKEN", '')
+export const tokenAtom = atomWithStorage<string | null>("WHITELIST_TOKEN", '')
 
 export const userInfoAtom = atomWithStorage<userInfoType | null>("WHITELIST_USER_INFO", null)
