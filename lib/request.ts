@@ -3,6 +3,9 @@ import { type z } from "zod"
 import { isEmpty } from 'lodash'
 import { notificationService } from "@/utils/notification";
 import { API_KEY } from "@/config";
+import { tokenAtom, userInfoAtom, type userInfoType } from '@/hooks/useUser'
+import { getDefaultStore } from 'jotai'
+
 
 let BaseUrl: string | undefined = ""
 if(process.env.NODE_ENV === "development") {
@@ -31,7 +34,7 @@ export default async function request<Request, Response extends {} | null>({
     identifier: string,
     thirdUrl?: string
 }): Promise<Response> {
-
+    const store = getDefaultStore()
     if (requestSchema != null && !isEmpty(config.data)) {
         console.log(config)
         requestSchema.parse(config.data)
@@ -56,7 +59,14 @@ export default async function request<Request, Response extends {} | null>({
             ...config,
         }).then((res) => res.data)
         // 校验后端返回的数据格式类型是否和前端一致
+        console.log(data)
+        if(data && data.code === 401) {
+            store.set(tokenAtom, null)
+            store.set(userInfoAtom, null)
+        }
         const parseResult = responseSchema.safeParse(data)
+
+        
 
         if (parseResult.success === true) {
             return parseResult.data
